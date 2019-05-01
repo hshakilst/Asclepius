@@ -4,7 +4,7 @@ const request = require("request");
 exports.search = functions.https.onRequest((req, res) => {
   if (req.query.keyword && req.query.keyword !== '' && req.method === 'POST') {
     request.post(
-      "https://wrapapi.com/use/hshakilst/drugs/medex/latest",
+      "https://wrapapi.com/use/hshakilst/drugs/medex/0.0.3",
       {
         json: {
           keyword: req.query.keyword,
@@ -12,7 +12,6 @@ exports.search = functions.https.onRequest((req, res) => {
         }
       },
       (error, response, body) => {
-        console.log(`statusCode:${response.statusCode}`);
         if (!error && parseInt(response.statusCode) === 200 && body.data) {
           res.status(200).json(body.data["output"]);
         } else {
