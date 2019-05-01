@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const request = require("request");
 
 exports.search = functions.https.onRequest((req, res) => {
-  if (req.query.keyword && req.query.keyword !== '') {
+  if (req.query.keyword && req.query.keyword !== '' && req.method === 'POST') {
     request.post(
       "https://wrapapi.com/use/hshakilst/drugs/medex/latest",
       {
@@ -21,7 +21,7 @@ exports.search = functions.https.onRequest((req, res) => {
       }
     );
   }
-  else if(!(req.query.keyword && req.query.keyword !== '')){
+  else if(!(req.query.keyword && req.query.keyword !== '' && req.method === 'POST')){
       res.status(400).json({"msg": "Bad Request!"});
   }
   else{
